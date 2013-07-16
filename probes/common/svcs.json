@@ -1,0 +1,13 @@
+{
+    "name": "svcs: SMF maintenance",
+    "type": "cmd",
+    "config": {
+        "cmd": "/usr/bin/svcs -x",
+        "stdoutMatch": {
+            "pattern": "maintenance",
+            "matchWord": true
+        },
+        "threshold": 1,
+        "period": 60
+    }
+}

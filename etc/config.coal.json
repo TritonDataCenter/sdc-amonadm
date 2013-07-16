@@ -1,0 +1,29 @@
+{
+    "amon": {
+        "url": "http://10.99.99.25"
+    },
+    "cnapi": {
+        "url": "http://10.99.99.22"
+    },
+    "imgapi": {
+        "url": "http://10.99.99.21"
+    },
+    "napi": {
+        "url": "http://10.99.99.10"
+    },
+    "sapi": {
+        "url": "http://10.99.99.35"
+    },
+    "ufds": {
+        "url": "ldaps://10.99.99.18:636",
+        "bindDN": "cn=root",
+        "bindPassword": "secret",
+        "cache": {
+            "size": 1000,
+            "expiry": 300
+        }
+    },
+    "vmapi": {
+        "url": "http://10.99.99.28"
+    }
+}

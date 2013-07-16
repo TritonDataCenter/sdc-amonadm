@@ -1,0 +1,26 @@
+{
+    "name": "manta-monitoring",
+    "description": "AMON configuration for Manta",
+    "version": "1.0.0",
+    "author": "Joyent (joyent.com)",
+    "private": true,
+    "dependencies": {
+        "assert-plus": "0.1.3",
+        "bunyan": "0.21.3",
+        "carrier": "0.1.10",
+        "clone": "0.1.9",
+        "cmdln": "1.2.0",
+        "extsprintf": "1.0.2",
+        "lru-cache": "2.3.0",
+        "once": "1.1.1",
+        "restify": "2.6.0",
+        "sdc-client": "git+ssh://git@git.joyent.com:node-sdc-clients.git#master",
+        "vasync": "1.3.3"
+    },
+    "devDependencies": {
+        "tap": "0.4.3"
+    },
+    "scripts": {
+        "test": "./node_modules/.bin/tap test/*.tst.js"
+    }
+}

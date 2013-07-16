@@ -1,0 +1,49 @@
+[
+    {
+        "name": "ZK: logscan 'ERROR'",
+        "type": "log-scan",
+        "config": {
+            "path": "/var/log/zookeeper/zookeeper.out",
+            "match": {
+                "pattern": "ERROR"
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    },
+    {
+        "name": "ZK: logscan 'Connection refused'",
+        "type": "log-scan",
+        "agent": "{{VM_UUID}}",
+        "config": {
+            "path": "/var/log/zookeeper/zookeeper.out",
+            "match": {
+                "pattern": "java.net.ConnectException: Connection refused"
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    },
+    {
+        "name": "binder: logscan",
+        "type": "bunyan-log-scan",
+        "config": {
+            "smfServiceName": "binder",
+            "fields": {
+                "level": "ERROR"
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    },
+    {
+        "name": "mbackup: logs not uploaded",
+        "type": "cmd",
+        "config": {
+            "cmd": "test ! $(find /var/log/manta/upload -type f | wc -l) -gt 0",
+            "interval": 300,
+            "threshold": 5,
+            "period": 1800
+        }
+    }
+]

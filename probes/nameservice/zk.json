@@ -1,0 +1,13 @@
+{
+    "name": "ZK: ruok",
+    "type": "cmd",
+    "config": {
+        "cmd": "echo 'ruok' | nc localhost 2181",
+        "stdoutMatch": {
+            "pattern": "imok",
+            "invert": true
+        },
+        "threshold": 1,
+        "period": 60
+    }
+}
