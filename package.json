@@ -1,6 +1,6 @@
 {
-    "name": "manta-monitoring",
-    "description": "AMON configuration for Manta",
+    "name": "mantamon",
+    "description": "Amon configuration for Manta",
     "version": "1.0.0",
     "author": "Joyent (joyent.com)",
     "private": true,
@@ -22,5 +22,9 @@
     },
     "scripts": {
         "test": "./node_modules/.bin/tap test/*.tst.js"
-    }
+    },
+    "bin": {
+        "mantamon": "./main.js"
+    },
+    "man": "./man/man1/mantamon.1"
 }

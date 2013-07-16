@@ -239,9 +239,7 @@ MantaMon.prototype.do_drop = function do_drop(subcmd, opts, args, cb) {
             mantamon.filter_probes,
             mantamon.drop_probes,
             function print(_, _cb) {
-                opts.probes.forEach(function (p) {
-                    console.log(p.uuid);
-                });
+                console.log('dropped %d probes', opts.probes.length);
                 _cb();
             }
         ]),
