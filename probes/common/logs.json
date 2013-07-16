@@ -1,0 +1,14 @@
+[
+    {
+        "name": "registrar-logscan",
+        "type": "bunyan-log-scan",
+        "config": {
+            "smfServiceName": "registrar",
+            "fields": {
+                "level": "FATAL"
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    }
+]

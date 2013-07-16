@@ -1,0 +1,14 @@
+[
+    {
+        "name": "moray-logscan",
+        "type": "bunyan-log-scan",
+        "config": {
+            "path": "/var/log/moray.log",
+            "fields": {
+                "level": "ERROR"
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    }
+]

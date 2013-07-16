@@ -1,0 +1,15 @@
+[
+    {
+        "name": "redis-ok",
+        "type": "cmd",
+        "config": {
+            "cmd": "/opt/local/bin/redis-cli PING",
+            "stdoutMatch": {
+                "pattern": "PONG",
+                "invert": true
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    }
+]

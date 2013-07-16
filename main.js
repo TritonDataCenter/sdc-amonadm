@@ -327,11 +327,6 @@ MantaMon.prototype.do_probe.help = (
 //-- List
 
 MantaMon.prototype.do_probes = function do_probes(_, opts, args, cb) {
-    if (opts.machine && opts.role) {
-        cb(new Error('machine and role cannot both be specified'));
-        return;
-    }
-
     vasync.pipeline({
         funcs: COMMON_FUNCS.concat([
             mantamon.list_probes,
@@ -344,7 +339,6 @@ MantaMon.prototype.do_probes = function do_probes(_, opts, args, cb) {
                 }
 
                 opts.probes.forEach(function (p) {
-
                     console.log(sprintf(fmt,
                                         p.role,
                                         p.agent.substr(0, 7),

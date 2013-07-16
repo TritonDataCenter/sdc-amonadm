@@ -1,0 +1,14 @@
+[
+    {
+        "name": "muppet-logscan",
+        "type": "bunyan-log-scan",
+        "config": {
+            "smfServiceName": "muppet",
+            "fields": {
+                "level": "ERROR"
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    }
+]

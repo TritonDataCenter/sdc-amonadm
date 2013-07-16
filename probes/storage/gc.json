@@ -1,0 +1,15 @@
+[
+    {
+        "name": "mako-gc-logscan",
+        "type": "log-scan",
+        "agent": "{{VM_UUID}}",
+        "config": {
+            "path": "/var/log/mako_gc.log",
+            "match": {
+                "pattern": "fatal error"
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    }
+]

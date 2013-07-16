@@ -1,0 +1,15 @@
+[
+    {
+        "name": "electric-moray-logscan",
+        "type": "bunyan-log-scan",
+        "config": {
+            "path": "/var/log/electric-moray.log",
+            "fields": {
+                "level": "ERROR"
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    }
+]
+
