@@ -1,0 +1,281 @@
+.TH mantamon 1 "July 2013" Manta "Manta Administrator Commands"
+.SH NAME
+.PP
+mantamon \- manage Amon probes and alarms for a datacenter
+.SH SYNOPSIS
+.PP
+\fB\fCmantamon\fR [OPTION...] command [command\-specific arguments]
+.SH DESCRIPTION
+.PP
+mantamon manages Amon probes and alarms for Manta services within a single
+datacenter.  The most common 
+.BR operation (s) 
+will be listing, viewing and closing
+alarms, however probe management is typically done at deployment time.
+.PP
+A few notes on how mantamon sets up probes in Amon:
+.RS
+.IP \(bu 2
+Each "service" is a probe group.  This means that all alarms for a service
+even on different machines only results in one page.  It is expected that
+operators upon getting an alert/page investigate the state of the system fully
+with \fB\fCmantamon alarms\fR.
+.IP \(bu 2
+Probes are added for a machine/role by combining the role name with all the
+probes under \fB\fCcommon\fR; the exception is \fB\fCcompute\fR, which is where marlin\-agent
+probes are defined (GZ).
+.IP \(bu 2
+mantamon is not idempotent; calling \fB\fCadd\fR twice on a role/machine will just
+double up all the probes. Use \fB\fCdrop\fR before \fB\fCadd\fR for the targeted 
+.BR system (s).
+.RE
+.PP
+The commands that you'll use on "live" systems are mostly:
+.RS
+.IP \(bu 2
+probes/probe
+.IP \(bu 2
+alarms/alarm
+.IP \(bu 2
+close
+.RE
+.PP
+And then there are "deployment" related commands:
+.RS
+.IP \(bu 2
+add
+.IP \(bu 2
+drop
+.RE
+.PP
+\fB\fCadd\fR puts new probes into the system by reading all the definitions in
+\fB\fC./probes\fR.  Note it doesn't try to do any reconciliation of existing
+probes, so if you specify that you want to add for a role or machine (or
+all), it's going to just append in everything it finds.  You almost certainly
+will want to run \fB\fCdrop\fR first for the targeted 
+.BR system (s).
+.PP
+Before describing the detailed options for each command, some sample workflows
+are given illustrating how to use mantamon.
+.SH EXAMPLE: Managing open alarms
+.PP
+Here I inserted a sample "LogScan Error" alarm into a \fB\fCnameservice\fR zone:
+.PP
+.RS
+.nf
+mantamon alarms
+ID   ROLE               MACHINE  PROBE
+41   nameservice        12b82cd  ZK: logscan 'ERROR'
+.fi
+.RE
+.PP
+Above we see an abbreviated listing of alarms that have fired. We can view details
+with:
+.PP
+.RS
+.nf
+mantamon alarm 41
+Marks-MacBook-Pro:mantamon mcavage$ node main.js alarm 41
+[ {
+  "id": 41,
+  "machine": "12b82cda-6466-439f-8b82-cf0b2ecd90ca",
+  "probe": {
+    ...
+  },
+  "data": {
+    "message": "Log \\"/var/log/zookeeper/zookeeper.out\\" matched /ERROR/.",
+    "value": 1,
+    "details": {
+      "matches": [ {
+        "match": "ERROR",
+        "context": "ERROR: example error from"
+      } ]
+    }
+  }
+} ]
+.fi
+.RE
+.PP
+Assuming we go and fix the actual problem, we can go close them (let's pretend
+there were several alarms for nameservice), and then we'll validate it actually
+closed:
+.PP
+.RS
+.nf
+mantamon close -r nameservice
+mantamon alarms
+ID   ROLE               MACHINE  PROBE
+.fi
+.RE
+.SH EXAMPLE: Adding probes to a newly deployed zone
+.PP
+Let's suppose we just deployed a new nameservice zone \fB\fC65196484\fR, so we'll go
+ahead and add probes to it:
+.PP
+.RS
+.nf
+mantamon add -r nameservice -m 65196484
+added 7 probes
+mantamon probes -r nameservice
+ROLE               MACHINE  PROBE    NAME
+nameservice        12b82cd  23f439e  ZK: ruok
+nameservice        12b82cd  2c248d4  svcs: SMF maintenance
+nameservice        12b82cd  48e935b  free space on / below 20%
+nameservice        12b82cd  856c306  binder: logscan
+nameservice        12b82cd  d7489f5  ZK: logscan 'Connection refused'
+nameservice        12b82cd  ee38f4a  ZK: logscan 'ERROR'
+nameservice        12b82cd  ffc215d  mbackup: logs not uploaded
+nameservice        6519648  2f88b35  svcs: SMF maintenance
+nameservice        6519648  5aa69e8  binder: logscan
+nameservice        6519648  734b66e  free space on / below 20%
+nameservice        6519648  7ae261e  ZK: logscan 'ERROR'
+nameservice        6519648  8af3e9f  ZK: ruok
+nameservice        6519648  9b49474  mbackup: logs not uploaded
+nameservice        6519648  d9f99e6  ZK: logscan 'Connection refused'
+.fi
+.RE
+.PP
+So now we can see that we've got a new set of probes defined for the new system.
+.SH EXAMPLE: Deleting probes from an undeployed zone
+.PP
+When a zone is undeployed, you'll want to be sure there are no lingering alarms
+for it (which will show up as \fB\fCUNKNOWN\fR):
+.PP
+.RS
+.nf
+mantamon drop -m 6519648
+dropped 7 probes
+.fi
+.RE
+.SH COMMON OPTIONS
+.PP
+The following options are supported in all commands:
+.TP
+\fB\fC-f, --file config_file\fR
+Use the specified configuration file, which matches what \fB\fCmanta-deployment\fR
+uses.  This can also be set in the environment using \fB\fCMANTAMON_CFG_FILE\fR.
+Authenticate as account (login name).
+.TP
+\fB\fC-h, --help\fR
+Print a help message and exit.
+.TP
+\fB\fC-v, --verbose\fR
+Turn on debug logging.  This will be \fB\fCbunyan\fR output, and will be on \fB\fCstderr\fR.
+Use something like \fB\fCmantamon alarms -v 2>&1 | bunyan\fR to view.
+.SH COMMANDS
+.PP
+The following commands and options are supported:
+.SS add [OPTIONS...]
+.PP
+Add probes to a machine, all machines in a role, or probes for all systems in a
+datacenter.  THe default with no options is to go through and add probes per
+role to all systems.
+.PP
+The following options are supported:
+.TP
+\fB\fC--concurrency LIMIT\fR
+number of probes to add in parallel
+.TP
+\fB\fC-m MACHINE_UUID, --machine UUID\fR
+machine to add probes for
+.TP
+\fB\fC-r, --role ROLE\fR
+role to create probes for (all machines)
+.SS drop [OPTIONS...]
+.PP
+Drops probes from a machine, all machines in a role, or probes for all systems
+in a datacenter.  THe default with no options is to drop all probes.
+.PP
+The following options are supported:
+.TP
+\fB\fC--concurrency LIMIT\fR
+number of probes to drop in parallel
+.TP
+\fB\fC-m MACHINE_UUID, --machine UUID\fR
+machine to add probes for
+.TP
+\fB\fC-r, --role ROLE\fR
+role to create probes for (all machines)
+.SS probes [OPTIONS...]
+.PP
+Lists probes for a machine, all machines in a role, or all probes in a
+datacenter.  The default is to list all probes.
+.PP
+The following options are supported:
+.TP
+\fB\fC-H\fR
+do not emit header line
+.TP
+\fB\fC-m MACHINE_UUID, --machine UUID\fR
+machine to add probes for
+.TP
+\fB\fC-r, --role ROLE\fR
+role to create probes for (all machines)
+.SS probe [OPTIONS...] PROBE...
+.PP
+Gets 
+.BR probe (s) 
+details (xargs friendly).  Raw JSON for probes is returned.
+.SS alarms [OPTIONS...]
+.PP
+Lists alarms for a machine, all machines in a role, or all alarms in a
+datacenter.  The default is to list all alarms.
+.PP
+The following options are supported:
+.TP
+\fB\fC--concurrency LIMIT\fR
+number of requests to make in parallel
+.TP
+\fB\fC-H\fR
+do not emit header line
+.TP
+\fB\fC-m MACHINE_UUID, --machine UUID\fR
+machine to add probes for
+.TP
+\fB\fC-r, --role ROLE\fR
+role to create probes for (all machines)
+.SS alarm [OPTIONS...] ID...
+.PP
+Gets 
+.BR alarm (s) 
+details (xargs friendly).  Raw JSON is returned.
+.PP
+The following options are supported:
+.TP
+\fB\fC--concurrency LIMIT\fR
+number of requests to make in parallel
+.SS close [OPTIONS...] ID...
+.PP
+Closes alarms for a machine, all machines in a role, or all alarms in a
+datacenter.  The default is to close all alarms.
+.PP
+The following options are supported:
+.TP
+\fB\fC--concurrency LIMIT\fR
+number of requests to make in parallel
+.TP
+\fB\fC-m MACHINE_UUID, --machine UUID\fR
+machine to add probes for
+.TP
+\fB\fC-r, --role ROLE\fR
+role to create probes for (all machines)
+.SH ENVIRONMENT
+.TP
+\fB\fCMANTAMON_CFG_FILE\fR
+In place of \fB\fC-f, --file\fR
+.SH DIAGNOSTICS
+.PP
+When using the \fB\fC-v\fR option, diagnostics will be sent to stderr in bunyan
+output format.  As an example of tracing all information about a request,
+try:
+.PP
+.RS
+.nf
+$ mantamon alarms -v 2>&1 | bunyan
+.fi
+.RE
+.SH BUGS
+.PP
+Report bugs at DevHub (MANTA)
+.UR https://devhub.joyent.com/jira/browse/MANTA
+.UE

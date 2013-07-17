@@ -98,7 +98,7 @@ EXAMPLE: Adding probes to a newly deployed zone
 Let's suppose we just deployed a new nameservice zone `65196484`, so we'll go
 ahead and add probes to it:
 
-    mantamon add -r nameservice -m
+    mantamon add -r nameservice -m 65196484
     added 7 probes
     mantamon probes -r nameservice
     ROLE               MACHINE  PROBE    NAME
