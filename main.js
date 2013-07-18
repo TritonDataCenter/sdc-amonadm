@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // Copyright 2013 Joyent, Inc. All rights reserved.
 
 var fs = require('fs');
