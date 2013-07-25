@@ -6,7 +6,8 @@
             "cmd": ". /root/.bashrc && test $(mfind /poseidon/stor/manta_gc/all/do | wc -l) -lt 15",
             "interval": "300",
             "period": "1800",
-            "threshold": "6"
+            "threshold": "6",
+            "timeout": 20
         }
     },
     {
@@ -17,6 +18,7 @@
             "interval": "300",
             "period": "1800",
             "threshold": "6",
+            "timeout": 20,
             "stdoutMatch": {
                 "pattern": "fail",
                 "type": "substring"
@@ -31,6 +33,7 @@
             "interval": "300",
             "period": "1800",
             "threshold": "6",
+            "timeout": 20,
             "stdoutMatch": {
                 "pattern": "fail",
                 "type": "substring"
