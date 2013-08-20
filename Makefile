@@ -40,7 +40,7 @@ MAN_PAGES       := $(shell ls docs/man)
 MAN_OUTDIR      := man/man1
 MAN_OUTPAGES=$(MAN_PAGES:%.md=$(MAN_OUTDIR)/%.1)
 MAN_ROOT        := docs/man
-NODE_PREBUILT_VERSION=v0.10.10
+NODE_PREBUILT_VERSION=v0.10.15
 
 ifeq ($(shell uname -s),SunOS)
 	NODE_PREBUILT_CC_VERSION=4.6.2

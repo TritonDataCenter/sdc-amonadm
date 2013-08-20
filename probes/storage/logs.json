@@ -1,0 +1,14 @@
+[
+    {
+        "name": "minnow-logscan",
+        "type": "bunyan-log-scan",
+        "config": {
+            "smfServiceName": "minnow",
+            "fields": {
+                "level": "ERROR"
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    }
+]
