@@ -12,7 +12,7 @@
       }
     },
     {
-        "name": "mola-logscan",
+        "name": "mola-logscan-error",
         "type": "bunyan-log-scan",
         "config": {
             "path": "/var/log/mola.log",
@@ -24,7 +24,19 @@
         }
     },
     {
-        "name": "mola-gc-create-links-logscan",
+        "name": "mola-logscan-fatal",
+        "type": "bunyan-log-scan",
+        "config": {
+            "path": "/var/log/mola.log",
+            "fields": {
+                "level": "FATAL"
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    },
+    {
+        "name": "mola-gc-create-links-logscan-error",
         "type": "bunyan-log-scan",
         "config": {
             "path": "/var/log/mola-gc-create-links.log",
@@ -36,7 +48,19 @@
         }
     },
     {
-        "name": "mola-moray-gc-logscan",
+        "name": "mola-gc-create-links-logscan-fatal",
+        "type": "bunyan-log-scan",
+        "config": {
+            "path": "/var/log/mola-gc-create-links.log",
+            "fields": {
+                "level": "FATAL"
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    },
+    {
+        "name": "mola-moray-gc-logscan-error",
         "type": "bunyan-log-scan",
         "config": {
             "path": "/var/log/mola-moray-gc.log",
@@ -48,12 +72,36 @@
         }
     },
     {
-        "name": "mola-audit-logscan",
+        "name": "mola-moray-gc-logscan-fatal",
+        "type": "bunyan-log-scan",
+        "config": {
+            "path": "/var/log/mola-moray-gc.log",
+            "fields": {
+                "level": "FATAL"
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    },
+    {
+        "name": "mola-audit-logscan-error",
         "type": "bunyan-log-scan",
         "config": {
             "path": "/var/log/mola-audit.log",
             "fields": {
                 "level": "ERROR"
+            },
+            "threshold": 1,
+            "period": 60
+        }
+    },
+    {
+        "name": "mola-audit-logscan-fatal",
+        "type": "bunyan-log-scan",
+        "config": {
+            "path": "/var/log/mola-audit.log",
+            "fields": {
+                "level": "FATAL"
             },
             "threshold": 1,
             "period": 60
