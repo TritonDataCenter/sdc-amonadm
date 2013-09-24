@@ -4,7 +4,7 @@ var bunyan = require('bunyan');
 var fs = require('fs');
 var path = require('path');
 var sdc = require('sdc-clients');
-var test = require("tap").test
+var test = require("tap").test;
 
 var mantamon = require('../lib');
 
@@ -46,7 +46,7 @@ test('setup', function (t) {
 
     var opts = {
         application: {
-            name: 'manta'
+            name: 'sdc'
         },
         log: LOG,
         sapi: SAPI,
@@ -68,7 +68,7 @@ test('list probes', function (t) {
         log: LOG,
         sapi: SAPI,
         vmapi: VMAPI,
-        user: 'poseidon'
+        user: 'admin'
     };
     mantamon.list_probes(opts, function (err, probes) {
         t.ifError(err);
@@ -90,8 +90,9 @@ test('filter probes by role', function (t) {
         log: LOG,
         sapi: SAPI,
         vmapi: VMAPI,
-        role: ['loadbalancer'],
-        user: 'poseidon'
+        // TODO: fix initial probe creation on sdc
+        role: ['vmapi-4337d96d-9302-4133-a4d8-0e0b020f2aad'],
+        user: 'admin'
     };
     mantamon.list_probes(opts, function (err) {
         t.ifError(err);
@@ -118,12 +119,14 @@ test('filter probes by machine', function (t) {
         log: LOG,
         sapi: SAPI,
         vmapi: VMAPI,
+        // TODO: for now, pass a UUID for this test to work
         machine: [Object.keys(APPLICATION.zones).pop()],
-        user: 'poseidon'
+        // machine: ['51dd7430-99b4-4bd8-b76e-eda67590a6ff'],
+        user: 'admin'
     };
-    mantamon.list_probes(opts, function (err) {
+    mantamon.list_probes(opts, function (err, ps) {
         t.ifError(err);
-
+        opts.probes = ps;
         mantamon.filter_probes(opts, function (err2, probes) {
             t.ifError(err2);
             t.ok(probes);
@@ -150,10 +153,9 @@ test('read probe files (all)', function (t) {
             t.end();
             return;
         }
-
-        t.ok(probes.marlin);
-        t.ok(Array.isArray(probes.marlin));
-        t.ok(probes.marlin.length);
+        t.ok(probes.storage);
+        t.ok(Array.isArray(probes.storage));
+        t.ok(probes.storage.length);
         t.ok(probes.nameservice);
         t.ok(Array.isArray(probes.nameservice));
         t.ok(probes.nameservice.length);

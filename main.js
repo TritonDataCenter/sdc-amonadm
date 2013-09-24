@@ -58,7 +58,8 @@ var LOG = bunyan.createLogger({
 });
 
 //-- Hard-coded Amon user and contact names. This must exist in UFDS.
-var USER = 'poseidon';
+// TODO: needs to be a config variable
+var USER = 'admin';
 var USER_CONTACTS = ['email', 'pagerdutyemail'];
 
 
@@ -132,7 +133,8 @@ function setup_clients(opts, cb) {
 
     var params = {
         application: {
-            name: 'manta'
+            // TODO: needs to be a config variable
+            name: 'sdc'
         },
         log: LOG,
         sapi: opts.sapi,
@@ -341,7 +343,8 @@ MantaMon.prototype.do_probes = function do_probes(_, opts, args, cb) {
 
                 opts.probes.forEach(function (p) {
                     console.log(sprintf(fmt,
-                                        p.role,
+                                        // TODO: make sure we always have a role
+                                        p.role || '', // Role can be absent
                                         p.agent.substr(0, 7),
                                         p.uuid.substr(0, 7),
                                         p.name));
