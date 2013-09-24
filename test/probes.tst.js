@@ -24,7 +24,6 @@ var SAPI;
 var VMAPI;
 
 
-
 ///--- Tests
 
 test('setup', function (t) {
