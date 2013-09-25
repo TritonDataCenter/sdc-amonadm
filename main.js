@@ -57,9 +57,7 @@ var LOG = bunyan.createLogger({
     serializers: restify.bunyan.serializers
 });
 
-//-- Hard-coded Amon user and contact names. This must exist in UFDS.
-// TODO: needs to be a config variable
-var USER = 'admin';
+//-- Hard-coded Amon contact names. This must exist in UFDS.
 var USER_CONTACTS = ['email', 'pagerdutyemail'];
 
 
@@ -128,13 +126,13 @@ function setup_clients(opts, cb) {
     opts.amon = new sdc.Amon(opts.config.amon);
     opts.sapi = new sdc.SAPI(opts.config.sapi);
     opts.vmapi = new sdc.VMAPI(opts.config.vmapi);
-    opts.user = USER;
+    opts.user = opts.config.user;
     opts.contacts = USER_CONTACTS;
 
     var params = {
         application: {
-            // TODO: needs to be a config variable
-            name: 'sdc'
+            name: opts.config.application,
+            role_key: opts.config.role_key
         },
         log: LOG,
         sapi: opts.sapi,

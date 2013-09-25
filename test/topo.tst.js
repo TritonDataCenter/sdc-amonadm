@@ -4,7 +4,7 @@ var bunyan = require('bunyan');
 var fs = require('fs');
 var path = require('path');
 var sdc = require('sdc-clients');
-var test = require("tap").test
+var test = require("tap").test;
 
 var load_application = require('../lib').load_application;
 
@@ -45,7 +45,8 @@ test('setup', function (t) {
 test('load manta application', function (t) {
     var opts = {
         application: {
-            name: 'sdc'
+            name: 'sdc',
+            role_key: 'smartdc_role'
         },
         log: LOG,
         sapi: SAPI,
@@ -63,17 +64,8 @@ test('load manta application', function (t) {
         }
         t.equal(app.name, 'sdc');
         t.ok(app.uuid);
-        // t.ok(app.roles.authcache);
-        // t.ok(app.roles.compute);
-        // t.ok(app.roles['electric-moray']);
-        // t.ok(app.roles.jobpuller);
-        // t.ok(app.roles.jobsupervisor);
-        // t.ok(app.roles.loadbalancer);
-        // t.ok(app.roles.moray);
-        // t.ok(app.roles.nameservice);
-        // t.ok(app.roles.postgres);
-        // t.ok(app.roles.storage);
-        // t.ok(app.roles.webapi);
+        t.ok(app.roles.imgapi);
+        t.ok(app.roles.amon);
 
         t.end();
     });

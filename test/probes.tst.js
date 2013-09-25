@@ -45,7 +45,8 @@ test('setup', function (t) {
 
     var opts = {
         application: {
-            name: 'sdc'
+            name: 'sdc',
+            role_key: 'smartdc_role'
         },
         log: LOG,
         sapi: SAPI,
@@ -90,7 +91,7 @@ test('filter probes by role', function (t) {
         sapi: SAPI,
         vmapi: VMAPI,
         // TODO: fix initial probe creation on sdc
-        role: ['vmapi-4337d96d-9302-4133-a4d8-0e0b020f2aad'],
+        role: ['imgapi-' + APPLICATION.roles.imgapi[0].uuid],
         user: 'admin'
     };
     mantamon.list_probes(opts, function (err) {
@@ -118,9 +119,7 @@ test('filter probes by machine', function (t) {
         log: LOG,
         sapi: SAPI,
         vmapi: VMAPI,
-        // TODO: for now, pass a UUID for this test to work
-        machine: [Object.keys(APPLICATION.zones).pop()],
-        // machine: ['51dd7430-99b4-4bd8-b76e-eda67590a6ff'],
+        machine: [APPLICATION.roles.imgapi[0].uuid],
         user: 'admin'
     };
     mantamon.list_probes(opts, function (err, ps) {
