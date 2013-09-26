@@ -65,7 +65,7 @@ test('load manta application', function (t) {
         t.equal(app.name, 'sdc');
         t.ok(app.uuid);
         t.ok(app.roles.imgapi);
-        t.ok(app.roles.amon);
+        t.ok(app.roles.vmapi);
 
         t.end();
     });

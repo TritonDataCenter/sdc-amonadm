@@ -1,0 +1,15 @@
+[
+    {
+        "name": "imgapi image creation failure",
+        "type": "bunyan-log-scan",
+        "config": {
+            "smfServiceName": "imgapi",
+            "fields": {
+                "route": "updateimage"
+            },
+            "match": {
+                "pattern": "error"
+            }
+        }
+    }
+]

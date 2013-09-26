@@ -142,6 +142,7 @@ test('filter probes by machine', function (t) {
 
 test('read probe files (all)', function (t) {
     var opts = {
+        application: 'sdc',
         log: LOG
     };
     mantamon.read_probe_files(opts, function (err, probes) {
@@ -151,12 +152,12 @@ test('read probe files (all)', function (t) {
             t.end();
             return;
         }
-        t.ok(probes.storage);
-        t.ok(Array.isArray(probes.storage));
-        t.ok(probes.storage.length);
-        t.ok(probes.nameservice);
-        t.ok(Array.isArray(probes.nameservice));
-        t.ok(probes.nameservice.length);
+        t.ok(probes.vmapi);
+        t.ok(Array.isArray(probes.vmapi));
+        t.ok(probes.vmapi.length);
+        t.ok(probes.imgapi);
+        t.ok(Array.isArray(probes.imgapi));
+        t.ok(probes.imgapi.length);
         t.end();
     });
 });
@@ -164,8 +165,9 @@ test('read probe files (all)', function (t) {
 
 test('read probe files (by role)', function (t) {
     var opts = {
+        application: 'sdc',
         log: LOG,
-        role: ['nameservice']
+        role: ['imgapi']
     };
     mantamon.read_probe_files(opts, function (err, probes) {
         t.ifError(err);
@@ -176,9 +178,9 @@ test('read probe files (by role)', function (t) {
         }
 
         t.notOk(probes.marlin);
-        t.ok(probes.nameservice);
-        t.ok(Array.isArray(probes.nameservice));
-        t.ok(probes.nameservice.length);
+        t.ok(probes.imgapi);
+        t.ok(Array.isArray(probes.imgapi));
+        t.ok(probes.imgapi.length);
         t.end();
     });
 });
