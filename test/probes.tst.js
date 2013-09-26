@@ -142,7 +142,7 @@ test('filter probes by machine', function (t) {
 
 test('read probe files (all)', function (t) {
     var opts = {
-        application: 'sdc',
+        application: { name: 'sdc' },
         log: LOG
     };
     mantamon.read_probe_files(opts, function (err, probes) {
@@ -165,7 +165,7 @@ test('read probe files (all)', function (t) {
 
 test('read probe files (by role)', function (t) {
     var opts = {
-        application: 'sdc',
+        application: { name: 'sdc' },
         log: LOG,
         role: ['imgapi']
     };
