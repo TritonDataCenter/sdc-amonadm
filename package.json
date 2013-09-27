@@ -1,6 +1,6 @@
 {
-    "name": "mantamon",
-    "description": "Amon configuration for Manta",
+    "name": "amonadm",
+    "description": "Amon configuration for SAPI applications",
     "version": "1.0.0",
     "author": "Joyent (joyent.com)",
     "private": true,
@@ -24,7 +24,7 @@
         "test": "./node_modules/.bin/tap test/*.tst.js"
     },
     "bin": {
-        "mantamon": "./main.js"
+        "amonadm": "./main.js"
     },
     "man": "./man/man1/mantamon.1"
 }

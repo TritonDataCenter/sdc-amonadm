@@ -168,7 +168,7 @@ function setup_logger(opts, cb) {
 
 function MantaMon() {
     cmdln.Cmdln.call(this, {
-        name: 'amonadm',
+        name: 'sdc-amonadm',
         desc: 'Manages AMON probes for a manta datacenter'
     });
 }
@@ -215,10 +215,10 @@ MantaMon.prototype.do_add.help = (
     'Adds all probes for a given role or machine.\n' +
         'The default is to add all probes for all roles\n' +
         'Example:\n' +
-        '    amonadm add -m f1289c4a-d56a-41d9-803b-7b1322ec2f29\n' +
+        '    sdc-amonadm add -m f1289c4a-d56a-41d9-803b-7b1322ec2f29\n' +
         '\n' +
         'Usage:\n' +
-        '     amonadm add [OPTIONS]\n' +
+        '     sdc-amonadm add [OPTIONS]\n' +
         '\n' +
         '{{options}}'
 );
@@ -274,10 +274,10 @@ MantaMon.prototype.do_drop.options = DEFAULT_OPTIONS.concat([
 MantaMon.prototype.do_drop.help = (
     'Drops all probes for a datacenter/machine.\n' +
         'Example:\n' +
-        '    amonadm drop -m f1289c4a-d56a-41d9-803b-7b1322ec2f29\n' +
+        '    sdc-amonadm drop -m f1289c4a-d56a-41d9-803b-7b1322ec2f29\n' +
         '\n' +
         'Usage:\n' +
-        '     amonadm drop [OPTIONS]\n' +
+        '     sdc-amonadm drop [OPTIONS]\n' +
         '\n' +
         '{{options}}'
 );
@@ -314,10 +314,10 @@ MantaMon.prototype.do_probe.help = (
     'Fetches probe(s) by uuid.\n' +
         'Example:\n' +
         /* JSSTYLED */
-        '    amonadm getprobe 98152930-c0e9-4b71-99fc-be6f5c920cc3 99d6647f-d112-4dba-8a4d-9fef4c55cdb7\n' +
+        '    sdc-amonadm getprobe 98152930-c0e9-4b71-99fc-be6f5c920cc3 99d6647f-d112-4dba-8a4d-9fef4c55cdb7\n' +
         '\n' +
         'Usage:\n' +
-        '     amonadm getprobe [OPTIONS] PROBE_UUID...\n' +
+        '     sdc-amonadm getprobe [OPTIONS] PROBE_UUID...\n' +
         '\n' +
         '{{options}}'
 );
@@ -375,10 +375,10 @@ MantaMon.prototype.do_probes.options = DEFAULT_OPTIONS.concat([
 MantaMon.prototype.do_probes.help = (
     'Lists all probes for a datacenter.\n' +
         'Example:\n' +
-        '    amonadm probes\n' +
+        '    sdc-amonadm probes\n' +
         '\n' +
         'Usage:\n' +
-        '     amonadm probes [OPTIONS]\n' +
+        '     sdc-amonadm probes [OPTIONS]\n' +
         '\n' +
         '{{options}}'
 );
@@ -425,10 +425,10 @@ MantaMon.prototype.do_alarm.options = DEFAULT_OPTIONS.concat([
 MantaMon.prototype.do_alarm.help = (
     'Gets details for an alarm in a datacenter.\n' +
         'Example:\n' +
-        '    amonadm alarm 37\n' +
+        '    sdc-amonadm alarm 37\n' +
         '\n' +
         'Usage:\n' +
-        '     amonadm alarm ID..\n' +
+        '     sdc-amonadm alarm ID..\n' +
         '\n' +
         '{{options}}'
 );
@@ -488,10 +488,10 @@ MantaMon.prototype.do_alarms.options = DEFAULT_OPTIONS.concat([
 MantaMon.prototype.do_alarms.help = (
     'Lists all alarms for a datacenter.\n' +
         'Example:\n' +
-        '    amonadm alarms\n' +
+        '    sdc-amonadm alarms\n' +
         '\n' +
         'Usage:\n' +
-        '     amonadm alarms [OPTIONS]\n' +
+        '     sdc-amonadm alarms [OPTIONS]\n' +
         '\n' +
         '{{options}}'
 );
@@ -540,12 +540,12 @@ MantaMon.prototype.do_close.help = (
     'Closes alarms for a datacenter.\n' +
         'You must specify one of -m, -r or a list of ids\n' +
         'Example:\n' +
-        '    amonadm close 1 3 5\n' +
-        '    amonadm close -r nameservice\n' +
-        '    amonadm close -m f8d02c7e-dc5c-11e2-9a6b-6fca0b458a96\n' +
+        '    sdc-amonadm close 1 3 5\n' +
+        '    sdc-amonadm close -r nameservice\n' +
+        '    sdc-amonadm close -m f8d02c7e-dc5c-11e2-9a6b-6fca0b458a96\n' +
         '\n' +
         'Usage:\n' +
-        '     amonadm close [OPTIONS] [id...]\n' +
+        '     sdc-amonadm close [OPTIONS] [id...]\n' +
         '\n' +
         '{{options}}'
 );
