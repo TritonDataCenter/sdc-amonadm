@@ -16,7 +16,7 @@ var sdc = require('sdc-clients');
 var sprintf = require('extsprintf').sprintf;
 var vasync = require('vasync');
 
-var mantamon = require('./lib');
+var amonadm = require('./lib');
 
 
 
@@ -37,9 +37,9 @@ var DEFAULT_OPTIONS = [
         names: ['file', 'f'],
         type: 'string',
         help: 'configuration file',
-        'default': '/opt/smartdc/manta-deployment/etc/config.json',
+        'default': '/opt/smartdc/sdc/etc/amonadm.config.json',
         helpArg: 'CONFIG_FILE',
-        env: 'MANTAMON_CFG_FILE'
+        env: 'AMONADM_CFG_FILE'
     }, {
         names: ['verbose', 'v'],
         type: 'bool',
@@ -136,7 +136,7 @@ function setup_clients(opts, cb) {
         sapi: opts.sapi,
         vmapi: opts.vmapi
     };
-    mantamon.load_application(params, function (err, app) {
+    amonadm.load_application(params, function (err, app) {
         if (err) {
             cb(err);
         } else {
@@ -168,7 +168,7 @@ function setup_logger(opts, cb) {
 
 function MantaMon() {
     cmdln.Cmdln.call(this, {
-        name: 'mantamon',
+        name: 'amonadm',
         desc: 'Manages AMON probes for a manta datacenter'
     });
 }
@@ -180,8 +180,8 @@ util.inherits(MantaMon, cmdln.Cmdln);
 MantaMon.prototype.do_add = function do_add(subcmd, opts, args, cb) {
     vasync.pipeline({
         funcs: COMMON_FUNCS.concat([
-            mantamon.read_probe_files,
-            mantamon.add_probes,
+            amonadm.read_probe_files,
+            amonadm.add_probes,
             function print(_, _cb) {
                 console.log('added %d probes', opts.count);
                 _cb();
@@ -215,10 +215,10 @@ MantaMon.prototype.do_add.help = (
     'Adds all probes for a given role or machine.\n' +
         'The default is to add all probes for all roles\n' +
         'Example:\n' +
-        '    mantamon add -m f1289c4a-d56a-41d9-803b-7b1322ec2f29\n' +
+        '    amonadm add -m f1289c4a-d56a-41d9-803b-7b1322ec2f29\n' +
         '\n' +
         'Usage:\n' +
-        '     mantamon add [OPTIONS]\n' +
+        '     amonadm add [OPTIONS]\n' +
         '\n' +
         '{{options}}'
 );
@@ -234,9 +234,9 @@ MantaMon.prototype.do_drop = function do_drop(subcmd, opts, args, cb) {
 
     vasync.pipeline({
         funcs: COMMON_FUNCS.concat([
-            mantamon.list_probes,
-            mantamon.filter_probes,
-            mantamon.drop_probes,
+            amonadm.list_probes,
+            amonadm.filter_probes,
+            amonadm.drop_probes,
             function print(_, _cb) {
                 console.log('dropped %d probes', opts.probes.length);
                 _cb();
@@ -274,10 +274,10 @@ MantaMon.prototype.do_drop.options = DEFAULT_OPTIONS.concat([
 MantaMon.prototype.do_drop.help = (
     'Drops all probes for a datacenter/machine.\n' +
         'Example:\n' +
-        '    mantamon drop -m f1289c4a-d56a-41d9-803b-7b1322ec2f29\n' +
+        '    amonadm drop -m f1289c4a-d56a-41d9-803b-7b1322ec2f29\n' +
         '\n' +
         'Usage:\n' +
-        '     mantamon drop [OPTIONS]\n' +
+        '     amonadm drop [OPTIONS]\n' +
         '\n' +
         '{{options}}'
 );
@@ -293,7 +293,7 @@ MantaMon.prototype.do_probe = function do_probe(subcmd, opts, args, cb) {
 
     vasync.pipeline({
         funcs: COMMON_FUNCS.concat([
-            mantamon.list_probes,
+            amonadm.list_probes,
             function print(_, _cb) {
                 var probes = [];
                 args.forEach(function (a) {
@@ -314,10 +314,10 @@ MantaMon.prototype.do_probe.help = (
     'Fetches probe(s) by uuid.\n' +
         'Example:\n' +
         /* JSSTYLED */
-        '    mantamon getprobe 98152930-c0e9-4b71-99fc-be6f5c920cc3 99d6647f-d112-4dba-8a4d-9fef4c55cdb7\n' +
+        '    amonadm getprobe 98152930-c0e9-4b71-99fc-be6f5c920cc3 99d6647f-d112-4dba-8a4d-9fef4c55cdb7\n' +
         '\n' +
         'Usage:\n' +
-        '     mantamon getprobe [OPTIONS] PROBE_UUID...\n' +
+        '     amonadm getprobe [OPTIONS] PROBE_UUID...\n' +
         '\n' +
         '{{options}}'
 );
@@ -328,8 +328,8 @@ MantaMon.prototype.do_probe.help = (
 MantaMon.prototype.do_probes = function do_probes(_, opts, args, cb) {
     vasync.pipeline({
         funcs: COMMON_FUNCS.concat([
-            mantamon.list_probes,
-            mantamon.filter_probes,
+            amonadm.list_probes,
+            amonadm.filter_probes,
             function print(__, _cb) {
                 var fmt = '%-18s %-8s %-8s %s';
                 if (!opts.H) {
@@ -375,10 +375,10 @@ MantaMon.prototype.do_probes.options = DEFAULT_OPTIONS.concat([
 MantaMon.prototype.do_probes.help = (
     'Lists all probes for a datacenter.\n' +
         'Example:\n' +
-        '    mantamon probes\n' +
+        '    amonadm probes\n' +
         '\n' +
         'Usage:\n' +
-        '     mantamon probes [OPTIONS]\n' +
+        '     amonadm probes [OPTIONS]\n' +
         '\n' +
         '{{options}}'
 );
@@ -394,8 +394,8 @@ MantaMon.prototype.do_alarm = function do_alarm(_, opts, args, cb) {
     }
     vasync.pipeline({
         funcs: COMMON_FUNCS.concat([
-            mantamon.list_alarms,
-            mantamon.filter_alarms,
+            amonadm.list_alarms,
+            amonadm.filter_alarms,
             function print(__, _cb) {
                 var alarms = [];
                 args.forEach(function (id) {
@@ -425,10 +425,10 @@ MantaMon.prototype.do_alarm.options = DEFAULT_OPTIONS.concat([
 MantaMon.prototype.do_alarm.help = (
     'Gets details for an alarm in a datacenter.\n' +
         'Example:\n' +
-        '    mantamon alarm 37\n' +
+        '    amonadm alarm 37\n' +
         '\n' +
         'Usage:\n' +
-        '     mantamon alarm ID..\n' +
+        '     amonadm alarm ID..\n' +
         '\n' +
         '{{options}}'
 );
@@ -437,8 +437,8 @@ MantaMon.prototype.do_alarm.help = (
 MantaMon.prototype.do_alarms = function do_alarms(_, opts, args, cb) {
     vasync.pipeline({
         funcs: COMMON_FUNCS.concat([
-            mantamon.list_alarms,
-            mantamon.filter_alarms,
+            amonadm.list_alarms,
+            amonadm.filter_alarms,
             function print(__, _cb) {
                 var fmt = '%-4s %-18s %-8s %s';
                 if (!opts.H)
@@ -488,10 +488,10 @@ MantaMon.prototype.do_alarms.options = DEFAULT_OPTIONS.concat([
 MantaMon.prototype.do_alarms.help = (
     'Lists all alarms for a datacenter.\n' +
         'Example:\n' +
-        '    mantamon alarms\n' +
+        '    amonadm alarms\n' +
         '\n' +
         'Usage:\n' +
-        '     mantamon alarms [OPTIONS]\n' +
+        '     amonadm alarms [OPTIONS]\n' +
         '\n' +
         '{{options}}'
 );
@@ -500,8 +500,8 @@ MantaMon.prototype.do_alarms.help = (
 MantaMon.prototype.do_close = function do_close(_, opts, args, cb) {
     vasync.pipeline({
         funcs: COMMON_FUNCS.concat([
-            mantamon.list_alarms,
-            mantamon.filter_alarms,
+            amonadm.list_alarms,
+            amonadm.filter_alarms,
             function filter_alarms_by_id(__, _cb) {
                 if (args.length) {
                     opts.alarms = opts.alarms.filter(function (a) {
@@ -510,7 +510,7 @@ MantaMon.prototype.do_close = function do_close(_, opts, args, cb) {
                 }
                 _cb();
             },
-            mantamon.close_alarms
+            amonadm.close_alarms
         ]),
         arg: opts
     }, once(cb));
@@ -540,12 +540,12 @@ MantaMon.prototype.do_close.help = (
     'Closes alarms for a datacenter.\n' +
         'You must specify one of -m, -r or a list of ids\n' +
         'Example:\n' +
-        '    mantamon close 1 3 5\n' +
-        '    mantamon close -r nameservice\n' +
-        '    mantamon close -m f8d02c7e-dc5c-11e2-9a6b-6fca0b458a96\n' +
+        '    amonadm close 1 3 5\n' +
+        '    amonadm close -r nameservice\n' +
+        '    amonadm close -m f8d02c7e-dc5c-11e2-9a6b-6fca0b458a96\n' +
         '\n' +
         'Usage:\n' +
-        '     mantamon close [OPTIONS] [id...]\n' +
+        '     amonadm close [OPTIONS] [id...]\n' +
         '\n' +
         '{{options}}'
 );
