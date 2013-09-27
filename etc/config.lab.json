@@ -1,27 +1,12 @@
 {
+    "application": "manta",
+    "user": "poseidon",
+    "role_key": "manta_role",
     "amon": {
         "url": "http://amon.bh1-kvm1.joyent.us"
     },
-    "cnapi": {
-        "url": "http://cnapi.bh1-kvm1.joyent.us"
-    },
-    "imgapi": {
-        "url": "http://imgapi.bh1-kvm1.joyent.us"
-    },
-    "napi": {
-        "url": "http://napi.bh1-kvm1.joyent.us"
-    },
     "sapi": {
         "url": "http://sapi.bh1-kvm1.joyent.us"
-    },
-    "ufds": {
-        "url": "ldaps://ufds.bh1-kvm1.joyent.us",
-        "bindDN": "cn=root",
-        "bindPassword": "secret",
-        "cache": {
-            "size": 1000,
-            "expiry": 300
-        }
     },
     "vmapi": {
         "url": "http://vmapi.bh1-kvm1.joyent.us"

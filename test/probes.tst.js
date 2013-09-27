@@ -90,8 +90,7 @@ test('filter probes by role', function (t) {
         log: LOG,
         sapi: SAPI,
         vmapi: VMAPI,
-        // TODO: fix initial probe creation on sdc
-        role: ['imgapi-' + APPLICATION.roles.imgapi[0].uuid],
+        role: ['imgapi'],
         user: 'admin'
     };
     mantamon.list_probes(opts, function (err) {

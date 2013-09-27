@@ -24,8 +24,6 @@ var mantamon = require('./lib');
 ///--- Globals
 
 var Amon = sdc.Amon;
-var CNAPI = sdc.CNAPI;
-var UFDS = sdc.UFDS;
 var VMAPI = sdc.VMAPI;
 
 var COMMON_FUNCS = [
