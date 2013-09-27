@@ -1,0 +1,13 @@
+[
+    {
+        "name": "usageapi-consumer error saving network metering",
+        "type": "log-scan",
+        "config": {
+            "smfServiceName": "usageapi-consumer",
+            "match": {
+                "pattern": "Error saving \\\\w+ metering for VM [^:]+",
+                "type": "regex"
+            }
+        }
+    }
+]

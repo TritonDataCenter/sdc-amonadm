@@ -1,0 +1,12 @@
+[
+    {
+        "name": "usageapi-consumer detected zone configuration missing network details",
+        "type": "log-scan",
+        "config": {
+            "smfServiceName": "usageapi-consumer",
+            "match": {
+                "pattern": "Missing networks in VM"
+            }
+        }
+    }
+]

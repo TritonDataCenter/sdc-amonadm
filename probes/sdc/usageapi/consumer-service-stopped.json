@@ -1,0 +1,12 @@
+[
+    {
+        "name": "usageapi-consumer service stopped",
+        "type": "log-scan",
+        "config": {
+            "smfServiceName": "usageapi-consumer",
+            "match": {
+                "pattern": "Stopping because"
+            }
+        }
+    }
+]

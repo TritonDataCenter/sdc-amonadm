@@ -1,0 +1,13 @@
+[
+    {
+        "name": "usageapi-consumer noticed a server isn't sending data anymore",
+        "type": "log-scan",
+        "config": {
+            "smfServiceName": "usageapi-consumer",
+            "match": {
+                "pattern": "Warning: server UUID .{36} has not sent a message since .{24}",
+                "type": "regex"
+            }
+        }
+    }
+]

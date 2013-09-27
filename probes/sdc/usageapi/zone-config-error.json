@@ -1,0 +1,13 @@
+[
+    {
+        "name": "usageapi-consumer error saving zone configuration",
+        "type": "log-scan",
+        "config": {
+            "smfServiceName": "usageapi-consumer",
+            "match": {
+                "pattern": "Error saving configuration for VM [^:]+",
+                "type": "regex"
+            }
+        }
+    }
+]
