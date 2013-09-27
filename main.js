@@ -166,18 +166,18 @@ function setup_logger(opts, cb) {
 
 ///--- API
 
-function MantaMon() {
+function AmonAdm() {
     cmdln.Cmdln.call(this, {
         name: 'sdc-amonadm',
-        desc: 'Manages AMON probes for a manta datacenter'
+        desc: 'Manages AMON probes for a SAPI application'
     });
 }
-util.inherits(MantaMon, cmdln.Cmdln);
+util.inherits(AmonAdm, cmdln.Cmdln);
 
 
 //-- Add
 
-MantaMon.prototype.do_add = function do_add(subcmd, opts, args, cb) {
+AmonAdm.prototype.do_add = function do_add(subcmd, opts, args, cb) {
     vasync.pipeline({
         funcs: COMMON_FUNCS.concat([
             amonadm.read_probe_files,
@@ -190,7 +190,7 @@ MantaMon.prototype.do_add = function do_add(subcmd, opts, args, cb) {
         arg: opts
     }, once(cb));
 };
-MantaMon.prototype.do_add.options = DEFAULT_OPTIONS.concat([
+AmonAdm.prototype.do_add.options = DEFAULT_OPTIONS.concat([
     {
         names: ['concurrency'],
         type: 'positiveInteger',
@@ -211,7 +211,7 @@ MantaMon.prototype.do_add.options = DEFAULT_OPTIONS.concat([
         helpArg: 'role name'
     }
 ]);
-MantaMon.prototype.do_add.help = (
+AmonAdm.prototype.do_add.help = (
     'Adds all probes for a given role or machine.\n' +
         'The default is to add all probes for all roles\n' +
         'Example:\n' +
@@ -226,7 +226,7 @@ MantaMon.prototype.do_add.help = (
 
 //-- Drop
 
-MantaMon.prototype.do_drop = function do_drop(subcmd, opts, args, cb) {
+AmonAdm.prototype.do_drop = function do_drop(subcmd, opts, args, cb) {
     if ((opts.machine || opts.role) && !xor(opts.machine, opts.role)) {
         cb(new Error('--machine and --role cannot both be specified'));
         return;
@@ -245,7 +245,7 @@ MantaMon.prototype.do_drop = function do_drop(subcmd, opts, args, cb) {
         arg: opts
     }, once(cb));
 };
-MantaMon.prototype.do_drop.options = DEFAULT_OPTIONS.concat([
+AmonAdm.prototype.do_drop.options = DEFAULT_OPTIONS.concat([
     {
         names: ['concurrency'],
         type: 'positiveInteger',
@@ -271,7 +271,7 @@ MantaMon.prototype.do_drop.options = DEFAULT_OPTIONS.concat([
         helpArg: 'MANTA_ROLE_NAME'
     }
 ]);
-MantaMon.prototype.do_drop.help = (
+AmonAdm.prototype.do_drop.help = (
     'Drops all probes for a datacenter/machine.\n' +
         'Example:\n' +
         '    sdc-amonadm drop -m f1289c4a-d56a-41d9-803b-7b1322ec2f29\n' +
@@ -285,7 +285,7 @@ MantaMon.prototype.do_drop.help = (
 
 //-- Get
 
-MantaMon.prototype.do_probe = function do_probe(subcmd, opts, args, cb) {
+AmonAdm.prototype.do_probe = function do_probe(subcmd, opts, args, cb) {
     if (args.length < 1) {
         cb(new Error('At least one Probe UUID must be specified'));
         return;
@@ -309,8 +309,8 @@ MantaMon.prototype.do_probe = function do_probe(subcmd, opts, args, cb) {
         arg: opts
     }, once(cb));
 };
-MantaMon.prototype.do_probe.options = DEFAULT_OPTIONS.slice(0);
-MantaMon.prototype.do_probe.help = (
+AmonAdm.prototype.do_probe.options = DEFAULT_OPTIONS.slice(0);
+AmonAdm.prototype.do_probe.help = (
     'Fetches probe(s) by uuid.\n' +
         'Example:\n' +
         /* JSSTYLED */
@@ -325,7 +325,7 @@ MantaMon.prototype.do_probe.help = (
 
 //-- List
 
-MantaMon.prototype.do_probes = function do_probes(_, opts, args, cb) {
+AmonAdm.prototype.do_probes = function do_probes(_, opts, args, cb) {
     vasync.pipeline({
         funcs: COMMON_FUNCS.concat([
             amonadm.list_probes,
@@ -352,7 +352,7 @@ MantaMon.prototype.do_probes = function do_probes(_, opts, args, cb) {
         arg: opts
     }, once(cb));
 };
-MantaMon.prototype.do_probes.options = DEFAULT_OPTIONS.concat([
+AmonAdm.prototype.do_probes.options = DEFAULT_OPTIONS.concat([
     {
         names: ['H'],
         type: 'bool',
@@ -372,7 +372,7 @@ MantaMon.prototype.do_probes.options = DEFAULT_OPTIONS.concat([
         helpArg: 'ROLE_NAME'
     }
 ]);
-MantaMon.prototype.do_probes.help = (
+AmonAdm.prototype.do_probes.help = (
     'Lists all probes for a datacenter.\n' +
         'Example:\n' +
         '    sdc-amonadm probes\n' +
@@ -387,7 +387,7 @@ MantaMon.prototype.do_probes.help = (
 
 //-- Alarms
 
-MantaMon.prototype.do_alarm = function do_alarm(_, opts, args, cb) {
+AmonAdm.prototype.do_alarm = function do_alarm(_, opts, args, cb) {
     if (!args.length) {
         cb(new Error('At least one alarm id required'));
         return;
@@ -413,7 +413,7 @@ MantaMon.prototype.do_alarm = function do_alarm(_, opts, args, cb) {
         arg: opts
     }, once(cb));
 };
-MantaMon.prototype.do_alarm.options = DEFAULT_OPTIONS.concat([
+AmonAdm.prototype.do_alarm.options = DEFAULT_OPTIONS.concat([
     {
         names: ['concurrency'],
         type: 'positiveInteger',
@@ -422,7 +422,7 @@ MantaMon.prototype.do_alarm.options = DEFAULT_OPTIONS.concat([
         'default': 5
     }
 ]);
-MantaMon.prototype.do_alarm.help = (
+AmonAdm.prototype.do_alarm.help = (
     'Gets details for an alarm in a datacenter.\n' +
         'Example:\n' +
         '    sdc-amonadm alarm 37\n' +
@@ -434,7 +434,7 @@ MantaMon.prototype.do_alarm.help = (
 );
 
 
-MantaMon.prototype.do_alarms = function do_alarms(_, opts, args, cb) {
+AmonAdm.prototype.do_alarms = function do_alarms(_, opts, args, cb) {
     vasync.pipeline({
         funcs: COMMON_FUNCS.concat([
             amonadm.list_alarms,
@@ -458,7 +458,7 @@ MantaMon.prototype.do_alarms = function do_alarms(_, opts, args, cb) {
         arg: opts
     }, once(cb));
 };
-MantaMon.prototype.do_alarms.options = DEFAULT_OPTIONS.concat([
+AmonAdm.prototype.do_alarms.options = DEFAULT_OPTIONS.concat([
     {
         names: ['concurrency'],
         type: 'positiveInteger',
@@ -485,7 +485,7 @@ MantaMon.prototype.do_alarms.options = DEFAULT_OPTIONS.concat([
         helpArg: 'ROLE_NAME'
     }
 ]);
-MantaMon.prototype.do_alarms.help = (
+AmonAdm.prototype.do_alarms.help = (
     'Lists all alarms for a datacenter.\n' +
         'Example:\n' +
         '    sdc-amonadm alarms\n' +
@@ -497,7 +497,7 @@ MantaMon.prototype.do_alarms.help = (
 );
 
 
-MantaMon.prototype.do_close = function do_close(_, opts, args, cb) {
+AmonAdm.prototype.do_close = function do_close(_, opts, args, cb) {
     vasync.pipeline({
         funcs: COMMON_FUNCS.concat([
             amonadm.list_alarms,
@@ -515,7 +515,7 @@ MantaMon.prototype.do_close = function do_close(_, opts, args, cb) {
         arg: opts
     }, once(cb));
 };
-MantaMon.prototype.do_close.options = DEFAULT_OPTIONS.concat([
+AmonAdm.prototype.do_close.options = DEFAULT_OPTIONS.concat([
     {
         names: ['concurrency'],
         type: 'positiveInteger',
@@ -536,7 +536,7 @@ MantaMon.prototype.do_close.options = DEFAULT_OPTIONS.concat([
         helpArg: 'ROLE_NAME'
     }
 ]);
-MantaMon.prototype.do_close.help = (
+AmonAdm.prototype.do_close.help = (
     'Closes alarms for a datacenter.\n' +
         'You must specify one of -m, -r or a list of ids\n' +
         'Example:\n' +
@@ -554,5 +554,5 @@ MantaMon.prototype.do_close.help = (
 ///--- Mainline
 
 (function main() {
-    cmdln.main(MantaMon);
+    cmdln.main(AmonAdm);
 })();
