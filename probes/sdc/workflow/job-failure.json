@@ -1,0 +1,28 @@
+[
+    {
+        "name": "wfapi image creation failure",
+        "type": "bunyan-log-scan",
+        "config": {
+            "smfServiceName": "wf-runner",
+            "fields": {
+                "level": "warn"
+            },
+            "match": {
+                "pattern": "create-from-vm.*failed"
+            }
+        }
+    },
+    {
+        "name": "wfapi provision failure",
+        "type": "bunyan-log-scan",
+        "config": {
+            "smfServiceName": "wf-runner",
+            "fields": {
+                "level": "warn"
+            },
+            "match": {
+                "pattern": "provision.*failed"
+            }
+        }
+    }
+]
