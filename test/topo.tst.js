@@ -20,7 +20,8 @@ var LOG = bunyan.createLogger({
 });
 var SAPI;
 var VMAPI;
-
+var AMON;
+var cfg;
 
 
 ///--- Tests
@@ -28,7 +29,7 @@ var VMAPI;
 test('setup', function (t) {
     var f = process.env.MANTAMON_CFG_FILE ||
         path.resolve(__dirname, '../etc/config.json');
-    var cfg = JSON.parse(fs.readFileSync(f, 'utf8'));
+    cfg = JSON.parse(fs.readFileSync(f, 'utf8'));
     cfg.sapi.log = LOG;
     cfg.vmapi.log = LOG;
 
@@ -36,6 +37,9 @@ test('setup', function (t) {
     t.ok(SAPI);
 
     VMAPI = new sdc.VMAPI(cfg.vmapi);
+    t.ok(VMAPI);
+
+    AMON = new sdc.Amon(cfg.amon);
     t.ok(VMAPI);
 
     t.end();
@@ -50,7 +54,9 @@ test('load manta application', function (t) {
         },
         log: LOG,
         sapi: SAPI,
-        vmapi: VMAPI
+        vmapi: VMAPI,
+        amon: AMON,
+        user: cfg.user
     };
     load_application(opts, function (err, app) {
         t.ifError(err);
@@ -75,5 +81,6 @@ test('load manta application', function (t) {
 test('shutdown', function (t) {
     SAPI.close();
     VMAPI.close();
+    AMON.close();
     t.end();
 });

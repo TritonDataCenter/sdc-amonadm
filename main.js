@@ -134,7 +134,9 @@ function setup_clients(opts, cb) {
         },
         log: LOG,
         sapi: opts.sapi,
-        vmapi: opts.vmapi
+        vmapi: opts.vmapi,
+        amon: opts.amon,
+        user: opts.user
     };
     amonadm.load_application(params, function (err, app) {
         if (err) {
@@ -178,6 +180,7 @@ util.inherits(AmonAdm, cmdln.Cmdln);
 //-- Add
 
 AmonAdm.prototype.do_add = function do_add(subcmd, opts, args, cb) {
+    opts.action = 'add';
     vasync.pipeline({
         funcs: COMMON_FUNCS.concat([
             amonadm.read_probe_files,
@@ -219,6 +222,58 @@ AmonAdm.prototype.do_add.help = (
         '\n' +
         'Usage:\n' +
         '     sdc-amonadm add [OPTIONS]\n' +
+        '\n' +
+        '{{options}}'
+);
+
+
+//-- Update
+
+AmonAdm.prototype.do_update = function do_update(subcmd, opts, args, cb) {
+    opts.action = 'update';
+    vasync.pipeline({
+        funcs: COMMON_FUNCS.concat([
+            amonadm.read_probe_files,
+            amonadm.add_probes,
+            function print(_, _cb) {
+                console.log('updated %d probes', opts.count);
+                _cb();
+            }
+        ]),
+        arg: opts
+    }, once(cb));
+};
+AmonAdm.prototype.do_update.options = DEFAULT_OPTIONS.concat([
+    {
+        names: ['concurrency'],
+        type: 'positiveInteger',
+        help: 'number of probes to update in parallel',
+        helpArg: 'LIMIT',
+        'default': 5
+    },
+    {
+        names: ['machine', 'm'],
+        type: 'arrayOfString',
+        help: 'machine to list probes for (specify multiple times)',
+        helpArg: 'MACHINE_UUID'
+    },
+    {
+        names: ['role', 'r'],
+        type: 'arrayOfString',
+        help: 'role to update probes for',
+        helpArg: 'role name'
+    }
+]);
+AmonAdm.prototype.do_update.help = (
+    'Updates all probes for a given role or machine. This is functionally\n' +
+    'equivalent to drop-add, but since previous probes are not deleted,\n' +
+    'existing alarms can still refer to the probes they belong to.\n' +
+        'The default is to update all probes for all roles\n' +
+        'Example:\n' +
+        '    sdc-amonadm update -m f1289c4a-d56a-41d9-803b-7b1322ec2f29\n' +
+        '\n' +
+        'Usage:\n' +
+        '     sdc-amonadm udpate [OPTIONS]\n' +
         '\n' +
         '{{options}}'
 );

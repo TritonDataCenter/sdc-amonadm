@@ -22,6 +22,7 @@ var LOG = bunyan.createLogger({
 });
 var SAPI;
 var VMAPI;
+var AMON;
 
 
 ///--- Tests
@@ -50,7 +51,9 @@ test('setup', function (t) {
         },
         log: LOG,
         sapi: SAPI,
-        vmapi: VMAPI
+        vmapi: VMAPI,
+        amon: AMON,
+        user: cfg.user
     };
     mantamon.load_application(opts, function (err, app) {
         t.ifError(err);
