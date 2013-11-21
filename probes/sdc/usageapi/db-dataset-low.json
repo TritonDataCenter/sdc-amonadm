@@ -1,9 +1,0 @@
-[
-    {
-        "name": "DB dataset running low on space",
-        "type": "disk-usage",
-        "config": {
-            "path": "/zones/{{machine}}/data"
-        }
-    }
-]
