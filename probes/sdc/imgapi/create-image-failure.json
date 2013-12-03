@@ -2,6 +2,7 @@
     {
         "name": "imgapi image creation failure",
         "type": "bunyan-log-scan",
+        "groupEvents": false,
         "config": {
             "smfServiceName": "imgapi",
             "fields": {

@@ -2,6 +2,7 @@
     {
         "name": "dapi assumed filled server due to missing cpu_cap",
         "type": "log-scan",
+        "groupEvents": false,
         "config": {
             "smfServiceName": "dapi",
             "match": {

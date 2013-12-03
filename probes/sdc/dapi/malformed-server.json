@@ -2,6 +2,7 @@
     {
         "name": "dapi saw malformed server object in request",
         "type": "log-scan",
+        "groupEvents": false,
         "config": {
             "smfServiceName": "dapi",
             "match": {

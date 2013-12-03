@@ -2,6 +2,7 @@
     {
         "name": "wfapi job failure",
         "type": "bunyan-log-scan",
+        "groupEvents": false,
         "config": {
             "smfServiceName": "wf-runner",
             "fields": {
