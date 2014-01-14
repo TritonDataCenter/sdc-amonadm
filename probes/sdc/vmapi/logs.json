@@ -10,16 +10,6 @@
         }
     },
     {
-        "name": "vmapi log error",
-        "type": "bunyan-log-scan",
-        "config": {
-            "smfServiceName": "vmapi",
-            "fields": {
-                "level": "error"
-            }
-        }
-    },
-    {
         "name": "vmapi log warn",
         "type": "bunyan-log-scan",
         "config": {
