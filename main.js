@@ -50,8 +50,8 @@ var DEFAULT_OPTIONS = [
 
 var LOG = bunyan.createLogger({
     name: path.basename(process.argv[1]),
-    level: (process.env.LOG_LEVEL || 'fatal'),
-    stream: process.stderr,
+    level: (process.env.LOG_LEVEL || 'info'),
+    // stream: process.stderr,
     serializers: restify.bunyan.serializers
 });
 
