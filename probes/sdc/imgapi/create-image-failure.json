@@ -6,7 +6,8 @@
         "config": {
             "smfServiceName": "imgapi",
             "fields": {
-                "route": "updateimage"
+                "route": "updateimage",
+                "action": "create-from-vm"
             },
             "match": {
                 "pattern": "error"
