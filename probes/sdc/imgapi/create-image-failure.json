@@ -10,7 +10,7 @@
                 "action": "create-from-vm"
             },
             "match": {
-                "pattern": "error"
+                "pattern": "InternalError"
             }
         }
     }
