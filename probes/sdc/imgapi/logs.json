@@ -18,15 +18,5 @@
                 "level": "error"
             }
         }
-    },
-    {
-        "name": "imgapi log warn",
-        "type": "bunyan-log-scan",
-        "config": {
-            "smfServiceName": "imgapi",
-            "fields": {
-                "level": "warn"
-            }
-        }
     }
 ]
