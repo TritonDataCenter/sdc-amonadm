@@ -235,8 +235,12 @@ AmonAdm.prototype.do_update = function do_update(subcmd, opts, args, cb) {
         funcs: COMMON_FUNCS.concat([
             amonadm.read_probe_files,
             amonadm.add_probes,
+            amonadm.list_probes,
+            amonadm.drop_probes,
             function print(_, _cb) {
-                console.log('updated %d probes', opts.count);
+                console.log('added %d probes', opts.added);
+                console.log('updated %d probes', opts.updated);
+                console.log('dropped %d probes', opts.dropped);
                 _cb();
             }
         ]),
