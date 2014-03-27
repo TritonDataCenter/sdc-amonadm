@@ -6,7 +6,7 @@ var path = require('path');
 var sdc = require('sdc-clients');
 var test = require("tap").test;
 
-var mantamon = require('../lib');
+var amonadm = require('../lib');
 
 
 
@@ -28,7 +28,7 @@ var AMON;
 ///--- Tests
 
 test('setup', function (t) {
-    var f = process.env.MANTAMON_CFG_FILE ||
+    var f = process.env.AMONADM_CFG_FILE ||
         path.resolve(__dirname, '../etc/config.json');
     var cfg = JSON.parse(fs.readFileSync(f, 'utf8'));
     cfg.amon.log = LOG;
@@ -55,7 +55,7 @@ test('setup', function (t) {
         amon: AMON,
         user: cfg.user
     };
-    mantamon.load_application(opts, function (err, app) {
+    amonadm.load_application(opts, function (err, app) {
         t.ifError(err);
         t.ok(app);
         APPLICATION = app;
@@ -73,7 +73,7 @@ test('list probes', function (t) {
         vmapi: VMAPI,
         user: 'admin'
     };
-    mantamon.list_probes(opts, function (err, probes) {
+    amonadm.list_probes(opts, function (err, probes) {
         t.ifError(err);
         t.ok(probes);
         if (err || !probes) {
@@ -96,10 +96,10 @@ test('filter probes by role', function (t) {
         role: ['imgapi'],
         user: 'admin'
     };
-    mantamon.list_probes(opts, function (err) {
+    amonadm.list_probes(opts, function (err) {
         t.ifError(err);
 
-        mantamon.filter_probes(opts, function (err2, probes) {
+        amonadm.filter_probes(opts, function (err2, probes) {
             t.ifError(err2);
             t.ok(probes);
             t.ok(probes.length);
@@ -124,10 +124,10 @@ test('filter probes by machine', function (t) {
         machine: [APPLICATION.roles.imgapi[0].uuid],
         user: 'admin'
     };
-    mantamon.list_probes(opts, function (err, ps) {
+    amonadm.list_probes(opts, function (err, ps) {
         t.ifError(err);
         opts.probes = ps;
-        mantamon.filter_probes(opts, function (err2, probes) {
+        amonadm.filter_probes(opts, function (err2, probes) {
             t.ifError(err2);
             t.ok(probes);
             t.ok(probes.length);
@@ -147,7 +147,7 @@ test('read probe files (all)', function (t) {
         application: { name: 'sdc' },
         log: LOG
     };
-    mantamon.read_probe_files(opts, function (err, probes) {
+    amonadm.read_probe_files(opts, function (err, probes) {
         t.ifError(err);
         t.ok(probes);
         if (err || !probes) {
@@ -171,7 +171,7 @@ test('read probe files (by role)', function (t) {
         log: LOG,
         role: ['imgapi']
     };
-    mantamon.read_probe_files(opts, function (err, probes) {
+    amonadm.read_probe_files(opts, function (err, probes) {
         t.ifError(err);
         t.ok(probes);
         if (err || !probes) {

@@ -27,7 +27,7 @@ var cfg;
 ///--- Tests
 
 test('setup', function (t) {
-    var f = process.env.MANTAMON_CFG_FILE ||
+    var f = process.env.AMONADM_CFG_FILE ||
         path.resolve(__dirname, '../etc/config.json');
     cfg = JSON.parse(fs.readFileSync(f, 'utf8'));
     cfg.sapi.log = LOG;
@@ -46,7 +46,7 @@ test('setup', function (t) {
 });
 
 
-test('load manta application', function (t) {
+test('load application', function (t) {
     var opts = {
         application: {
             name: 'sdc',

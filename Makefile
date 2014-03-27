@@ -17,14 +17,12 @@
 #
 # Tools
 #
-MD2MAN			:= md2man-roff
 NPM			:= npm
 TAP			:= ./node_modules/.bin/tap
 
 #
 # Files
 #
-DOC_FILES	 = index.restdown
 JS_FILES	:= $(shell ls *.js) $(shell find lib -name '*.js')
 JSON_FILES	 = package.json
 JSL_CONF_NODE	 = tools/jsl.node.conf
@@ -36,10 +34,7 @@ JSSTYLE_FLAGS	 = -f tools/jsstyle.conf
 # Variables
 #
 
-MAN_PAGES       := $(shell ls docs/man)
 MAN_OUTDIR      := man/man1
-MAN_OUTPAGES=$(MAN_PAGES:%.md=$(MAN_OUTDIR)/%.1)
-MAN_ROOT        := docs/man
 NODE_PREBUILT_VERSION=v0.10.15
 
 ifeq ($(shell uname -s),SunOS)
@@ -71,15 +66,13 @@ CLEAN_FILES += $(TAP) ./node_modules/tap
 test: $(TAP)
 	$(NPM) test
 
-$(MAN_OUTDIR):
-	mkdir -p $@
 
-$(MAN_OUTDIR)/%.1: $(MAN_ROOT)/%.md | $(MAN_OUTDIR)
-	$(MD2MAN) $^ > $@
-
-.PHONY: manpages
-manpages: $(MAN_OUTPAGES)
-
+.PHONY: docs
+docs:
+	@[[ `which ronn` ]] || (echo "No 'ronn' on your PATH. Install with 'gem install ronn'" && exit 2)
+	mkdir -p $(MAN_OUTDIR)
+	ronn -m docs/man/amonadm.md > $(MAN_OUTDIR)/amonadm.1
+	@echo "# test with 'man ./man/man1/amonadm.1'"
 
 include ./tools/mk/Makefile.deps
 ifeq ($(shell uname -s),SunOS)

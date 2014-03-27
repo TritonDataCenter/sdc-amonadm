@@ -27,5 +27,5 @@
     "bin": {
         "amonadm": "./main.js"
     },
-    "man": "./man/man1/mantamon.1"
+    "man": "./man/man1/amonadm.1"
 }

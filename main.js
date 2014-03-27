@@ -327,7 +327,7 @@ AmonAdm.prototype.do_drop.options = DEFAULT_OPTIONS.concat([
         names: ['role', 'r'],
         type: 'arrayOfString',
         help: 'role to drop probes for',
-        helpArg: 'MANTA_ROLE_NAME'
+        helpArg: 'ROLE_NAME'
     }
 ]);
 AmonAdm.prototype.do_drop.help = (
