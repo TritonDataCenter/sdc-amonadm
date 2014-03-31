@@ -23,7 +23,8 @@ var LOG = bunyan.createLogger({
 var SAPI;
 var VMAPI;
 var AMON;
-
+var PROBES_DIR = process.env.AMONADM_PROBES_DIR ||
+    path.resolve(__dirname, 'probes');
 
 ///--- Tests
 
@@ -144,6 +145,7 @@ test('filter probes by machine', function (t) {
 
 test('read probe files (all)', function (t) {
     var opts = {
+        dir: PROBES_DIR,
         application: { name: 'sdc' },
         log: LOG
     };
@@ -167,6 +169,7 @@ test('read probe files (all)', function (t) {
 
 test('read probe files (by role)', function (t) {
     var opts = {
+        dir: PROBES_DIR,
         application: { name: 'sdc' },
         log: LOG,
         role: ['imgapi']

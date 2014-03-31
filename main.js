@@ -41,6 +41,13 @@ var DEFAULT_OPTIONS = [
         helpArg: 'CONFIG_FILE',
         env: 'AMONADM_CFG_FILE'
     }, {
+        names: ['dir', 'd'],
+        type: 'string',
+        help: 'probe files directory',
+        'default': '/opt/smartdc/sdc/probes',
+        helpArg: 'PROBES_DIR',
+        env: 'AMONADM_PROBES_DIR'
+    }, {
         names: ['verbose', 'v'],
         type: 'bool',
         help: 'turn on verbose logging',
