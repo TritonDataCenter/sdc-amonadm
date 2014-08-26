@@ -27,5 +27,6 @@
     "bin": {
         "amonadm": "./main.js"
     },
-    "man": "./man/man1/amonadm.1"
+    "man": "./man/man1/amonadm.1",
+    "license": "MPL-2.0"
 }
