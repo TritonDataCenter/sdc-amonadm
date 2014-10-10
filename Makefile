@@ -43,7 +43,7 @@ JSSTYLE_FLAGS	 = -f tools/jsstyle.conf
 #
 
 MAN_OUTDIR      := man/man1
-NODE_PREBUILT_VERSION=v0.10.15
+NODE_PREBUILT_VERSION=v0.11.14
 
 ifeq ($(shell uname -s),SunOS)
 	NODE_PREBUILT_CC_VERSION=4.6.2
