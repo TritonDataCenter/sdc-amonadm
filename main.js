@@ -6,7 +6,7 @@
  */
 
 /*
- * Copyright (c) 2014, Joyent, Inc.
+ * Copyright (c) 2019, Joyent, Inc.
  */
 
 var fs = require('fs');
@@ -121,6 +121,7 @@ function read_config_file(opts, cb) {
 
         opts.config.amon.log = opts.log.child({component: 'amon'}, true);
         opts.config.sapi.log = opts.log.child({component: 'sapi'}, true);
+        opts.config.sapi.version = '~2';
         opts.config.vmapi.log = opts.log.child({component: 'vmapi'}, true);
 
         cb();

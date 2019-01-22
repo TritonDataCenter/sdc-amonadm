@@ -5,19 +5,20 @@
 -->
 
 <!--
-    Copyright (c) 2014, Joyent, Inc.
+    Copyright (c) 2019, Joyent, Inc.
 -->
 
 # sdc-amonadm
+
+This repository is part of the Joyent Triton project. See the [contribution
+guidelines](https://github.com/joyent/triton/blob/master/CONTRIBUTING.md) --
+*Triton does not use GitHub PRs* -- and general documentation at the main
+[Triton project](https://github.com/joyent/triton) page.
 
 This repo contains `amonadm`, which is the administrative tool that manages
 probes and alarms for an SDC datacenter. If you are not familiar with Amon
 already, refer to its [documentation](https://github.com/joyent/sdc-amon) for a
 quick overview on it.
-
-This repository is part of the Joyent SmartDataCenter project (SDC).  For
-contribution guidelines, issues, and general documentation, visit the main
-[SDC](http://github.com/joyent/sdc) project page.
 
 There is full documentation installed with it as a manpage, so in an sdc
 deployment zone just do `man amonadm`.

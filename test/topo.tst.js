@@ -5,7 +5,7 @@
  */
 
 /*
- * Copyright (c) 2014, Joyent, Inc.
+ * Copyright (c) 2019, Joyent, Inc.
  */
 
 var bunyan = require('bunyan');
@@ -39,6 +39,7 @@ test('setup', function (t) {
         path.resolve(__dirname, '../etc/config.json');
     cfg = JSON.parse(fs.readFileSync(f, 'utf8'));
     cfg.sapi.log = LOG;
+    cfg.sapi.version = '~2';
     cfg.vmapi.log = LOG;
 
     SAPI = new sdc.SAPI(cfg.sapi);

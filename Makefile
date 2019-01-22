@@ -70,5 +70,19 @@ docs:
 	ronn -m docs/man/amonadm.md > $(MAN_OUTDIR)/amonadm.1
 	@echo "# test with 'man ./man/man1/amonadm.1'"
 
+# This repo doesn't publish to npm, so a 'release' is just a tag.
+.PHONY: cutarelease
+cutarelease:
+	[[ -z `git status --short` ]]  # If this fails, the working dir is dirty.
+	@which json 2>/dev/null 1>/dev/null && \
+	    ver=$(shell json -f package.json version) && \
+	    echo "** Are you sure you want to tag v$$ver?" && \
+	    echo "** Enter to continue, Ctrl+C to abort." && \
+	    read
+	ver=$(shell cat package.json | json version) && \
+	    date=$(shell date -u "+%Y-%m-%d") && \
+	    git tag -a "v$$ver" -m "version $$ver ($$date)" && \
+	    git push origin "v$$ver"
+
 include ./tools/mk/Makefile.deps
 include ./tools/mk/Makefile.targ

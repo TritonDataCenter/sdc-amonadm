@@ -5,7 +5,7 @@
  */
 
 /*
- * Copyright (c) 2014, Joyent, Inc.
+ * Copyright (c) 2019, Joyent, Inc.
  */
 
 var bunyan = require('bunyan');
@@ -42,6 +42,7 @@ test('setup', function (t) {
     var cfg = JSON.parse(fs.readFileSync(f, 'utf8'));
     cfg.amon.log = LOG;
     cfg.sapi.log = LOG;
+    cfg.sapi.version = '~2';
     cfg.vmapi.log = LOG;
 
     AMON = new sdc.Amon(cfg.amon);
