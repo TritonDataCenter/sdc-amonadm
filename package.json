@@ -1,7 +1,7 @@
 {
     "name": "amonadm",
     "description": "Amon configuration for SAPI applications",
-    "version": "1.0.3",
+    "version": "1.0.2",
     "author": "Joyent (joyent.com)",
     "private": true,
     "dependencies": {
